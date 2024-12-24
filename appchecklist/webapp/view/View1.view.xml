@@ -1,0 +1,204 @@
+<mvc:View controllerName="appchecklist.appchecklist.controller.View1"
+	xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:layout="sap.ui.layout"
+	xmlns="sap.m">
+		<Page
+		title="Page"
+		class="sapUiContentPadding" >
+		<customHeader>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Title text="{i18n>appTitle}" level="H2"/>
+				<ToolbarSpacer/>
+			</Toolbar>
+		</customHeader>
+	<content>
+	<Panel expandable="true" headerText="Datos Generales" width="auto" class="sapUiResponsiveMargin">
+		<content>
+				
+          <!-- Ubicación Técnica -->
+          <Label text="Ubicación Técnica" />
+          <Input value="{UbicacionTecnica}" placeholder="Ingrese ubicación técnica" />
+          <!-- Equipo -->
+          <Label text="Equipo" />
+          <Input value="{Equipo}" placeholder="Ingrese el equipo" />
+          <!-- Punto de Medida -->
+          <Label text="Punto de Medida" />
+          <Input value="{PuntoDeMedida}" placeholder="Ingrese punto de medida" />
+          <!-- Último documento medición -->
+          <Label text="Último documento medición" />
+          <Input value="{UltimoDocumentoMedicion}" placeholder="Ingrese documento medición" />
+          <!-- OT -->
+          <Label text="OT" />
+          <Input value="{OT}" placeholder="Ingrese OT" />
+          <!-- Fecha Inicio -->
+          <Label text="Fecha Inicio" />
+          <DatePicker value="{FechaInicio}" displayFormat="dd-MM-yyyy" />
+          <!-- Fecha Fin -->
+          <Label text="Fecha Fin" />
+          <DatePicker value="{FechaFin}" displayFormat="dd-MM-yyyy" />
+          <!-- Hora Inicio -->
+          <Label text="Hora Inicio" />
+          <TimePicker value="{HoraInicio}" />
+          <!-- Hora Fin -->
+          <Label text="Hora Fin" />
+          <TimePicker value="{HoraFin}" />
+    
+
+
+
+		</content>
+	</Panel>
+	<Panel expandable="true" headerText="Check List" width="auto" class="sapUiResponsiveMargin">
+		<content>
+				 <Table
+          id="checklistTable"
+          inset="false"
+          width="100%"
+          mode="None">
+          
+          <columns>
+            <!-- Columna: Actividad -->
+            <Column hAlign="Begin">
+              <Text text="ACTIVIDAD" />
+            </Column>
+            <!-- Columna: Tarea -->
+            <Column hAlign="Begin">
+              <Text text="TAREA" />
+            </Column>
+            <!-- Columna: Estado -->
+            <Column hAlign="Center">
+              <Text text="ESTADO" />
+            </Column>
+            <!-- Columna: Observaciones -->
+            <Column hAlign="Begin">
+              <Text text="OBSERVACIONES" />
+            </Column>
+          </columns>
+          <items>
+            <ColumnListItem>
+              <!-- Actividad -->
+              <cells>
+                <Text text="Calificación Diseño" />
+                <!-- Tarea -->
+                <Text text="Vida útil del instrumento/obsolescencia" />
+                <!-- Estado -->
+                <Select
+                  forceSelection="true"
+                  width="100%"
+                  items="{
+                    path: '/Estado'
+                  }">
+                  <core:Item key="{estado}" text="{estado}" />
+                </Select>
+                <!-- Observaciones -->
+                <Input placeholder="Añadir comentario" />
+              </cells>
+            </ColumnListItem>
+            <!-- Segunda fila -->
+            <ColumnListItem>
+              <cells>
+                <Text text="Calificación Diseño" />
+                <Text text="Resistencia a golpes y vibraciones hasta 4G" />
+                <Select
+                  forceSelection="true"
+                  width="100%"
+                  items="{
+                    path: '/Estado'
+                  }">
+                  <core:Item key="keyB" text="NO_APROBABLE" />
+                </Select>
+                <Input placeholder="Añadir comentario" />
+              </cells>
+            </ColumnListItem>
+          </items>
+        </Table>
+		</content>
+	</Panel>
+	<Panel expandable="true" headerText="Datos numericos" width="auto" class="sapUiResponsiveMargin">
+		<content>
+			 <Table
+          id="datosNumericosTable"
+          inset="false"
+          width="100%"
+          mode="None">
+          <headerToolbar>
+            <Toolbar>
+              <Title text="Datos Numéricos Actividades" />
+            </Toolbar>
+          </headerToolbar>
+          <columns>
+            <!-- Columna Actividad -->
+            <Column>
+              <Text text="ACTIVIDAD" />
+            </Column>
+            <!-- Columna Tarea -->
+            <Column>
+              <Text text="TAREA" />
+            </Column>
+            <!-- Columna Bornes -->
+            <Column>
+              <Text text="BORNES" />
+            </Column>
+            <!-- Columna Medición -->
+            <Column>
+              <Text text="MEDICIÓN" />
+            </Column>
+            <!-- Columna Medición Anterior -->
+            <Column>
+              <Text text="MEDICIÓN ANTERIOR" />
+            </Column>
+          </columns>
+          <items>
+            <ColumnListItem>
+              <cells>
+                <!-- Actividad -->
+                <Text text="{Actividad}" />
+                <!-- Tarea -->
+                <Text text="{Tarea}" />
+                <!-- Bornes -->
+                <Text text="{Bornes}" />
+                <!-- Medición -->
+                <Text text="{Medicion}" />
+                <!-- Medición Anterior -->
+                <Text text="{MedicionAnterior}" />
+              </cells>
+            </ColumnListItem>
+          </items>
+        </Table>
+		</content>
+	</Panel>
+	<Panel expandable="true" headerText="Recepción de trabajos" width="auto" class="sapUiResponsiveMargin">
+		<content>
+			
+		</content>
+	</Panel>
+    </content>	
+
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+			
+				<Button type="Reject"
+						text="Cancelar"
+						press="onPressCancel"
+						ariaDescribedBy="rejectButtonDescription genericButtonDescription">
+					<layoutData>
+						<FlexItemData growFactor="1" />
+					</layoutData>
+				</Button>
+					<Button type="Accept"
+						text="Guardar"
+						press="onPressSave"
+						ariaDescribedBy="acceptButtonDescription genericButtonDescription">
+					<layoutData>
+						<FlexItemData growFactor="1" />
+					</layoutData>
+				</Button>
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>
