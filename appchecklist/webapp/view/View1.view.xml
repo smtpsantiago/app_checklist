@@ -3,7 +3,6 @@
 	xmlns:core="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:form="sap.ui.layout.form"
-	xmlns:layout="sap.ui.layout"
 	xmlns="sap.m">
 		<Page
 		title="Page"
@@ -11,7 +10,7 @@
 		<customHeader>
 			<Toolbar>
 				<ToolbarSpacer/>
-				<Title text="{i18n>appTitle}" level="H2"/>
+				<Title text="{i18n>appTitlePage}" level="H2"/>
 				<ToolbarSpacer/>
 			</Toolbar>
 		</customHeader>
@@ -36,10 +35,14 @@
           <Input value="{OT}" placeholder="Ingrese OT" />
           <!-- Fecha Inicio -->
           <Label text="Fecha Inicio" />
-          <DatePicker value="{FechaInicio}" displayFormat="dd-MM-yyyy" />
+          <DatePicker  value="{
+              path: '/FechaInicio',
+              type: 'sap.ui.model.type.Date'}" displayFormat="dd-MM-yyyy" />
           <!-- Fecha Fin -->
           <Label text="Fecha Fin" />
-          <DatePicker value="{FechaFin}" displayFormat="dd-MM-yyyy" />
+          <DatePicker  value="{
+              path: '/FechaFin',
+              type: 'sap.ui.model.type.Date'}" displayFormat="dd-MM-yyyy" />
           <!-- Hora Inicio -->
           <Label text="Hora Inicio" />
           <TimePicker value="{HoraInicio}" />
@@ -58,6 +61,9 @@
           id="checklistTable"
           inset="false"
           width="100%"
+          	items="{
+			        path: '/CheckList'
+		        }" 
           mode="None">
           
           <columns>
@@ -103,14 +109,11 @@
               <cells>
                 <Text text="Calificación Diseño" />
                 <Text text="Resistencia a golpes y vibraciones hasta 4G" />
-                <Select
-                  forceSelection="true"
-                  width="100%"
-                  items="{
-                    path: '/Estado'
-                  }">
-                  <core:Item key="keyB" text="NO_APROBABLE" />
-                </Select>
+                 <Select width="100%" selectedKey="{Estado}">
+                    <core:Item key="Estado1" text="No Aprueba" />
+                    <core:Item key="Estado2" text="No Aplica" />
+                    <core:Item key="Estado3" text="Aprueba" />
+                  </Select>
                 <Input placeholder="Añadir comentario" />
               </cells>
             </ColumnListItem>
@@ -124,6 +127,9 @@
           id="datosNumericosTable"
           inset="false"
           width="100%"
+          	items="{
+			        path: '/DatosNumericos'
+		        }" 
           mode="None">
           <headerToolbar>
             <Toolbar>
@@ -162,7 +168,7 @@
                 <!-- Bornes -->
                 <Text text="{Bornes}" />
                 <!-- Medición -->
-                <Text text="{Medicion}" />
+                <Input text="{Medicion}" />
                 <!-- Medición Anterior -->
                 <Text text="{MedicionAnterior}" />
               </cells>
@@ -173,7 +179,29 @@
 	</Panel>
 	<Panel expandable="true" headerText="Recepción de trabajos" width="auto" class="sapUiResponsiveMargin">
 		<content>
-			
+    	<l:VerticalLayout class="sapUiContentPadding" width="100%">
+			 <!-- Sección Técnico -->
+            <Title text="TÉCNICO" wrapping="true" />
+            <!-- Nombre Técnico -->
+            <Label text="NOMBRE TÉCNICO:" />
+            <Input value="{NombreTecnico}" placeholder="Ingrese el nombre del técnico" />
+            <!-- Empresa Contratista -->
+            <Label text="EMPRESA CONTRATISTA:" />
+            <Input value="{EmpresaContratista}" placeholder="Ingrese la empresa contratista" />
+            <!-- Nombre ITO -->
+            <Label text="NOMBRE ITO:" />
+            <Input value="{NombreITO}" placeholder="Ingrese el nombre del ITO" />
+            <!-- Nombre Supervisor -->
+            <Label text="NOMBRE SUPERVISOR:" />
+            <Select width="100%" selectedKey="{NombreSupervisor}">
+              <core:Item key="Supervisor1" text="Supervisor 1" />
+              <core:Item key="Supervisor2" text="Supervisor 2" />
+              <core:Item key="Supervisor3" text="Supervisor 3" />
+            </Select>
+            <!-- Nombre Operador -->
+            <Label text="NOMBRE OPERADOR:" />
+            <Input value="{NombreOperador}" placeholder="Ingrese el nombre del operador" />
+            </l:VerticalLayout>
 		</content>
 	</Panel>
     </content>	
