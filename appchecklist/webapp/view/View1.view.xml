@@ -4,7 +4,7 @@
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:form="sap.ui.layout.form"
 	xmlns="sap.m">
-		<Page
+		<Page 
 		title="Page"
 		class="sapUiContentPadding" >
 		<customHeader>
@@ -18,21 +18,21 @@
 	<Panel expandable="true" headerText="Datos Generales" width="auto" class="sapUiResponsiveMargin">
 		<content>
 				
-          <!-- Ubicación Técnica -->
+          <!-- Ubicación Técnica {UbicacionTecnica}-->
           <Label text="Ubicación Técnica" />
-          <Input value="{UbicacionTecnica}" placeholder="Ingrese ubicación técnica" />
-          <!-- Equipo -->
+          <Input value="" placeholder="Ingrese ubicación técnica" />
+          <!-- Equipo {Equipo}-->
           <Label text="Equipo" />
-          <Input value="{Equipo}" placeholder="Ingrese el equipo" />
-          <!-- Punto de Medida -->
+          <Input value="" placeholder="Ingrese el equipo" />
+          <!-- Punto de Medida {PuntoDeMedida}-->
           <Label text="Punto de Medida" />
-          <Input value="{PuntoDeMedida}" placeholder="Ingrese punto de medida" />
-          <!-- Último documento medición -->
+          <Input value="" placeholder="Ingrese punto de medida" />
+          <!-- Último documento medición {UltimoDocumentoMedicion}-->
           <Label text="Último documento medición" />
-          <Input value="{UltimoDocumentoMedicion}" placeholder="Ingrese documento medición" />
-          <!-- OT -->
+          <Input value="" placeholder="Ingrese documento medición" />
+          <!-- OT {OT}-->
           <Label text="OT" />
-          <Input value="{OT}" placeholder="Ingrese OT" />
+          <Input value="" placeholder="Ingrese OT" />
           <!-- Fecha Inicio -->
           <Label text="Fecha Inicio" />
           <DatePicker  value="{
@@ -43,15 +43,22 @@
           <DatePicker  value="{
               path: '/FechaFin',
               type: 'sap.ui.model.type.Date'}" displayFormat="dd-MM-yyyy" />
-          <!-- Hora Inicio -->
-          <Label text="Hora Inicio" />
-          <TimePicker value="{HoraInicio}" />
-          <!-- Hora Fin -->
+          <!-- Hora Inicio {HoraInicio}-->
+          <Label text="Hora Inicio " />
+          <TimePicker value="" />
+          <!-- Hora Fin {HoraFin}-->
           <Label text="Hora Fin" />
-          <TimePicker value="{HoraFin}" />
-    
-
-
+          <TimePicker value="" />
+            <!-- Operación -->
+          <Label text="Operación" />
+            <Select width="100%" selectedKey="{Operacion}">
+                    <core:Item key="Operacion1" text="Operacion 0010" />
+                    <core:Item key="Operacion2" text="Operacion 0020" />
+                    <core:Item key="Operacion3" text="Operacion 0030" />
+            </Select>
+              <!-- HH Reales {HHReales}-->
+          <Label text="HH Reales" />
+          <Input	type="Number" value="" placeholder="Ingrese Horas" />
 
 		</content>
 	</Panel>
@@ -88,9 +95,9 @@
             <ColumnListItem>
               <!-- Actividad -->
               <cells>
-                <Text text="Calificación Diseño" />
+                <Text text="{Actividad}" />
                 <!-- Tarea -->
-                <Text text="Vida útil del instrumento/obsolescencia" />
+                 <Text text="{Tarea}" />
                 <!-- Estado -->
                 <Select
                   forceSelection="true"
@@ -98,13 +105,13 @@
                   items="{
                     path: '/Estado'
                   }">
-                  <core:Item key="{estado}" text="{estado}" />
+                  <core:Item key="{Select}" text="{Select}" />
                 </Select>
                 <!-- Observaciones -->
                 <Input placeholder="Añadir comentario" />
               </cells>
             </ColumnListItem>
-            <!-- Segunda fila -->
+            <!-- Segunda fila 
             <ColumnListItem>
               <cells>
                 <Text text="Calificación Diseño" />
@@ -117,6 +124,7 @@
                 <Input placeholder="Añadir comentario" />
               </cells>
             </ColumnListItem>
+            -->
           </items>
         </Table>
 		</content>
@@ -181,26 +189,34 @@
 		<content>
     	<l:VerticalLayout class="sapUiContentPadding" width="100%">
 			 <!-- Sección Técnico -->
-            <Title text="TÉCNICO" wrapping="true" />
-            <!-- Nombre Técnico -->
-            <Label text="NOMBRE TÉCNICO:" />
-            <Input value="{NombreTecnico}" placeholder="Ingrese el nombre del técnico" />
-            <!-- Empresa Contratista -->
+    
+            <!-- Nombre Técnico {NombreTecnico1}-->
+            <Label text="NOMBRE TÉCNICO 1:" />
+            <Input value="" placeholder="Ingrese el nombre del técnico 1" />
+             <!-- Nombre Técnico 2 {NombreTecnico2}-->
+            <Label text="NOMBRE TÉCNICO 2:" />
+            <Input value="" placeholder="Ingrese el nombre del técnico 2" />
+            <!-- Empresa Contratista {EmpresaContratista}-->
             <Label text="EMPRESA CONTRATISTA:" />
-            <Input value="{EmpresaContratista}" placeholder="Ingrese la empresa contratista" />
-            <!-- Nombre ITO -->
+            <Input value="" placeholder="Ingrese la empresa contratista" />
+            <!-- Nombre ITO {NombreITO}-->
             <Label text="NOMBRE ITO:" />
-            <Input value="{NombreITO}" placeholder="Ingrese el nombre del ITO" />
-            <!-- Nombre Supervisor -->
+            <Input value="" placeholder="Ingrese el nombre del ITO" />
+            <!-- Nombre Supervisor 
             <Label text="NOMBRE SUPERVISOR:" />
             <Select width="100%" selectedKey="{NombreSupervisor}">
               <core:Item key="Supervisor1" text="Supervisor 1" />
               <core:Item key="Supervisor2" text="Supervisor 2" />
               <core:Item key="Supervisor3" text="Supervisor 3" />
             </Select>
-            <!-- Nombre Operador -->
+            -->
+             <!-- Nombre Supervisor {NombreSupervisor} -->
+            <Label text="Nombre Supervisor:" />
+            <Input value="" placeholder="Ingrese el nombre del Supervisor" />
+           
+            <!-- Nombre Operador {NombreOperador} -->
             <Label text="NOMBRE OPERADOR:" />
-            <Input value="{NombreOperador}" placeholder="Ingrese el nombre del operador" />
+            <Input value="" placeholder="Ingrese el nombre del operador" />
             </l:VerticalLayout>
 		</content>
 	</Panel>
@@ -209,7 +225,7 @@
 		<footer>
 			<Toolbar>
 				<ToolbarSpacer/>
-			
+				<Button text="Adjuntos" press="onPress" />
 				<Button type="Reject"
 						text="Cancelar"
 						press="onPressCancel"
