@@ -15,7 +15,7 @@
 			</Toolbar>
 		</customHeader>
 	<content>
-	<Panel expandable="true" headerText="Datos Generales" width="auto" class="sapUiResponsiveMargin">
+	<Panel expandable="true" headerText="DATOS GENERALES" width="auto" class="sapUiResponsiveMargin">
 		<content>
 				
           <!-- Ubicación Técnica {UbicacionTecnica}-->
@@ -62,7 +62,7 @@
 
 		</content>
 	</Panel>
-	<Panel expandable="true" headerText="Check List" width="auto" class="sapUiResponsiveMargin">
+	<Panel expandable="true" headerText="CHECKLIST" width="auto" class="sapUiResponsiveMargin">
 		<content>
 				 <Table
           id="checklistTable"
@@ -129,7 +129,7 @@
         </Table>
 		</content>
 	</Panel>
-	<Panel expandable="true" headerText="Datos numericos" width="auto" class="sapUiResponsiveMargin">
+	<Panel expandable="true" headerText="DATOS NUMERICOS" width="auto" class="sapUiResponsiveMargin">
 		<content>
 			 <Table
           id="datosNumericosTable"
@@ -185,7 +185,7 @@
         </Table>
 		</content>
 	</Panel>
-	<Panel expandable="true" headerText="Recepción de trabajos" width="auto" class="sapUiResponsiveMargin">
+	<Panel expandable="true" headerText="RECEPCION DE TRABAJOS" width="auto" class="sapUiResponsiveMargin">
 		<content>
     	<l:VerticalLayout class="sapUiContentPadding" width="100%">
 			 <!-- Sección Técnico -->
@@ -211,7 +211,7 @@
             </Select>
             -->
              <!-- Nombre Supervisor {NombreSupervisor} -->
-            <Label text="Nombre Supervisor:" />
+            <Label text="NOMBRE SUPERVISOR:" />
             <Input value="" placeholder="Ingrese el nombre del Supervisor" />
            
             <!-- Nombre Operador {NombreOperador} -->
