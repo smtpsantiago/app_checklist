@@ -24,12 +24,15 @@
           <!-- Equipo {Equipo}-->
           <Label text="Equipo" />
           <Input value="" placeholder="Ingrese el equipo" />
-          <!-- Punto de Medida {PuntoDeMedida}-->
-          <Label text="Punto de Medida" />
-          <Input value="" placeholder="Ingrese punto de medida" />
-          <!-- Último documento medición {UltimoDocumentoMedicion}-->
-          <Label text="Último documento medición" />
-          <Input value="" placeholder="Ingrese documento medición" />
+          <!-- Punto de Medida {PuntoDeMedida}
+            <Label text="Punto de Medida" />
+            <Input value="" placeholder="Ingrese punto de medida" />
+          -->
+
+          <!-- Último documento medición {UltimoDocumentoMedicion}
+            <Label text="Último documento medición" />
+            <Input value="" placeholder="Ingrese documento medición" />
+         -->
           <!-- OT {OT}-->
           <Label text="OT" />
           <Input value="" placeholder="Ingrese OT" />
@@ -49,18 +52,73 @@
           <!-- Hora Fin {HoraFin}-->
           <Label text="Hora Fin" />
           <TimePicker value="" />
-            <!-- Operación -->
-          <Label text="Operación" />
-            <Select width="100%" selectedKey="{Operacion}">
-                    <core:Item key="Operacion1" text="Operacion 0010" />
-                    <core:Item key="Operacion2" text="Operacion 0020" />
-                    <core:Item key="Operacion3" text="Operacion 0030" />
-            </Select>
-              <!-- HH Reales {HHReales}-->
-          <Label text="HH Reales" />
-          <Input	type="Number" value="" placeholder="Ingrese Horas" />
+            <!-- Operación
+                <Label text="Operación" />
+                  <Select width="100%" selectedKey="{Operacion}">
+                          <core:Item key="Operacion1" text="Operacion 0010" />
+                          <core:Item key="Operacion2" text="Operacion 0020" />
+                          <core:Item key="Operacion3" text="Operacion 0030" />
+                  </Select>
+             -->
+              <!-- HH Reales {HHReales}
+              <Label text="HH Reales" />
+              <Input	type="Number" value="" placeholder="Ingrese Horas" />
+            -->
 
 		</content>
+	</Panel>
+  	<Panel expandable="true" headerText="OPERACIONES" width="auto" class="sapUiResponsiveMargin">
+		<content>
+    	 <Table
+          id="idOperacionesTable"
+          inset="false"
+          width="100%"
+          	items="{
+			        path: '/Operaciones'
+		        }" 
+          mode="None">
+          
+             <columns>
+                    <Column>
+                        <Text text="Op."/>
+                    </Column>
+                    <Column>
+                        <Text text="SOp"/>
+                    </Column>
+                    <Column>
+                        <Text text="PstoTbjo"/>
+                    </Column>
+                    <Column>
+                        <Text text="Txt.brv.operación"/>
+                    </Column>
+                    <Column>
+                        <Text text="Trabajo"/>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <Text text="{Operacion}"/>
+                            <Text text="{SubOperacion}"/>
+                            <Text text="{PuestoTrabajo}"/>
+                            <Text text="{DescripcionOperacion}"/>
+                            <Text text="{Trabajo}"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+            <!-- HH Reales {HHReales} -->
+              <Label text="HH Reales" />
+              <Input	type="Number" value="" placeholder="Ingrese Horas" />
+         
+                <!-- Selección de Motivo -->
+            <Label text="Motivo Desviación:"/>
+           <Select id="idMotivo" width="100%" selectedKey="{/Motivos/SelectedMotivo}" items="{/Motivos/Lista}">
+                    <core:Item key="{key}" text="{text}" />
+                </Select>
+             
+           
+    		</content>
 	</Panel>
 	<Panel expandable="true" headerText="CHECKLIST" width="auto" class="sapUiResponsiveMargin">
 		<content>
@@ -90,6 +148,10 @@
             <Column hAlign="Begin">
               <Text text="OBSERVACIONES" />
             </Column>
+            <!-- Columna: Notificar -->
+            <Column>
+              <Text text="Notificar" />
+            </Column>
           </columns>
           <items>
             <ColumnListItem>
@@ -109,6 +171,9 @@
                 </Select>
                 <!-- Observaciones -->
                 <Input placeholder="Añadir comentario" />
+
+                <!-- Notificar -->
+                 <CheckBox selected="{Notificar}" />
               </cells>
             </ColumnListItem>
             <!-- Segunda fila 
@@ -141,7 +206,7 @@
           mode="None">
           <headerToolbar>
             <Toolbar>
-              <Title text="Datos Numéricos Actividades" />
+              <!-- <Title text="Datos Numéricos Actividades" />-->
             </Toolbar>
           </headerToolbar>
           <columns>
@@ -151,11 +216,11 @@
             </Column>
             <!-- Columna Tarea -->
             <Column>
-              <Text text="TAREA" />
+              <Text text="PARAMETRO DE MEDICION" />
             </Column>
             <!-- Columna Bornes -->
             <Column>
-              <Text text="BORNES" />
+              <Text text="UNIDAD DE MEDIDA" />
             </Column>
             <!-- Columna Medición -->
             <Column>
@@ -165,25 +230,65 @@
             <Column>
               <Text text="MEDICIÓN ANTERIOR" />
             </Column>
+               <!-- Columna: Notificar -->
+            <Column>
+              <Text text="Notificar" />
+            </Column>
           </columns>
           <items>
             <ColumnListItem>
               <cells>
                 <!-- Actividad -->
                 <Text text="{Actividad}" />
-                <!-- Tarea -->
+                <!-- Tarea ahora parametro de medicion-->
                 <Text text="{Tarea}" />
-                <!-- Bornes -->
-                <Text text="{Bornes}" />
+                <!-- Bornes ahora unidad de medida-->
+                <!-- UnidadMedida -->
+                <Select
+                  forceSelection="true"
+                  width="100%"
+                  items="{
+                    path: '/UnidadMedida'
+                  }">
+                  <core:Item key="{Select}" text="{Select}" />
+                </Select>
                 <!-- Medición -->
                 <Input text="{Medicion}" />
                 <!-- Medición Anterior -->
                 <Text text="{MedicionAnterior}" />
+                 <!-- Notificar -->
+                 <CheckBox selected="{Notificar}" />
               </cells>
             </ColumnListItem>
           </items>
         </Table>
 		</content>
+	</Panel>
+  	<Panel expandable="true" headerText="MEDICIONES" width="auto" class="sapUiResponsiveMargin">
+		<content>
+      <!-- Nueva Tabla de Mediciones -->
+            <Table id="idMedicionesTable" items="{/Mediciones}">
+                <headerToolbar>
+                    <Toolbar>
+                        <Title text="Mediciones" />
+                    </Toolbar>
+                </headerToolbar>
+                <columns>
+                    <Column><Text text="Punto de Medida" /></Column>
+                    <Column><Text text="Descripción" /></Column>
+                    <Column><Text text="Valor Medido" /></Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <Text text="{PuntoMedida}" />
+                            <Text text="{Descripcion}" />
+                            <Input value="{ValorMedido}" placeholder="Ingrese el valor" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+    		</content>
 	</Panel>
 	<Panel expandable="true" headerText="RECEPCION DE TRABAJOS" width="auto" class="sapUiResponsiveMargin">
 		<content>
