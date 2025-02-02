@@ -29,3 +29,7 @@ server:
       afterMiddleware: compression
       configuration:
         ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
+        backend:
+          - url: http://vhgnlds4ci.sap.gnlquintero.com:44300
+            path: /sap
+            destination: gnlqhttpsdev100

@@ -94,6 +94,10 @@
                     <Column>
                         <Text text="Trabajo"/>
                     </Column>
+                    <!-- Columna: Notificar -->
+                    <Column>
+                      <Text text="Notificar" />
+                    </Column>
                 </columns>
                 <items>
                     <ColumnListItem>
@@ -103,6 +107,8 @@
                             <Text text="{PuestoTrabajo}"/>
                             <Text text="{DescripcionOperacion}"/>
                             <Text text="{Trabajo}"/>
+                            <CheckBox selected="{Notificar}" />
+           
                         </cells>
                     </ColumnListItem>
                 </items>
@@ -270,7 +276,7 @@
             <Table id="idMedicionesTable" items="{/Mediciones}">
                 <headerToolbar>
                     <Toolbar>
-                        <Title text="Mediciones" />
+                        <!--  <Title text="Mediciones" />-->
                     </Toolbar>
                 </headerToolbar>
                 <columns>
