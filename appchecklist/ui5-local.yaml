@@ -30,6 +30,7 @@ server:
       configuration:
         ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
         backend:
-          - url: http://vhgnlds4ci.sap.gnlquintero.com:44300
+          - scp: true
             path: /sap
-            destination: gnlqhttpsdev100
+            url: http://vhgnlds4ci.sap.gnlquintero.com:44300
+            destination: gnlqhttpsdev200

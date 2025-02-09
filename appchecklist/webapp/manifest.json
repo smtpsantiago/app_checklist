@@ -30,7 +30,7 @@
         },
         "dataSources": {
             "ZPM01_SRV": {
-                "uri": "/sap/opu/odata/sap/ZPM01_SRV",
+                "uri": "/sap/opu/odata/sap/ZPM01_SRV/",
                 "type": "OData",
                 "settings": {
                     "annotations": [],

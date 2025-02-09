@@ -10,7 +10,7 @@
 		<customHeader>
 			<Toolbar>
 				<ToolbarSpacer/>
-				<Title text="{i18n>appTitlePage}" level="H2"/>
+				<Title text="{i18n>appTitlePage} : {viewModel>/TextChecklist}" level="H2"/>
 				<ToolbarSpacer/>
 			</Toolbar>
 		</customHeader>
@@ -18,342 +18,200 @@
 	<Panel expandable="true" headerText="DATOS GENERALES" width="auto" class="sapUiResponsiveMargin">
 		<content>
 				
-          <!-- Ubicación Técnica {UbicacionTecnica}-->
-          <Label text="Ubicación Técnica" />
-          <Input value="" placeholder="Ingrese ubicación técnica" />
-          <!-- Equipo {Equipo}-->
-          <Label text="Equipo" />
-          <Input value="" placeholder="Ingrese el equipo" />
-          <!-- Punto de Medida {PuntoDeMedida}
-            <Label text="Punto de Medida" />
-            <Input value="" placeholder="Ingrese punto de medida" />
-          -->
+         <Label text="Ubicación Técnica" />
+                    <Input value="{viewModel>/UbicacionTecnica}" placeholder="Ingrese ubicación técnica" 	enabled="false"/>
 
-          <!-- Último documento medición {UltimoDocumentoMedicion}
-            <Label text="Último documento medición" />
-            <Input value="" placeholder="Ingrese documento medición" />
-         -->
-          <!-- OT {OT}-->
-          <Label text="OT" />
-          <Input value="" placeholder="Ingrese OT" />
-          <!-- Fecha Inicio -->
-          <Label text="Fecha Inicio" />
-          <DatePicker  value="{
-              path: '/FechaInicio',
-              type: 'sap.ui.model.type.Date'}" displayFormat="dd-MM-yyyy" />
-          <!-- Fecha Fin -->
-          <Label text="Fecha Fin" />
-          <DatePicker  value="{
-              path: '/FechaFin',
-              type: 'sap.ui.model.type.Date'}" displayFormat="dd-MM-yyyy" />
-          <!-- Hora Inicio {HoraInicio}-->
-          <Label text="Hora Inicio " />
-          <TimePicker value="" />
-          <!-- Hora Fin {HoraFin}-->
-          <Label text="Hora Fin" />
-          <TimePicker value="" />
-            <!-- Operación
-                <Label text="Operación" />
-                  <Select width="100%" selectedKey="{Operacion}">
-                          <core:Item key="Operacion1" text="Operacion 0010" />
-                          <core:Item key="Operacion2" text="Operacion 0020" />
-                          <core:Item key="Operacion3" text="Operacion 0030" />
-                  </Select>
-             -->
-              <!-- HH Reales {HHReales}
-              <Label text="HH Reales" />
-              <Input	type="Number" value="" placeholder="Ingrese Horas" />
-            -->
+                    <Label text="Equipo" />
+                    <Input value="{viewModel>/Equipo}" placeholder="Ingrese el equipo" 	enabled="false"/>
+
+                    <Label text="OT" />
+                    <Input value="{viewModel>/OT}" placeholder="Ingrese OT" 	enabled="false"/>
+
+                    <Label text="Fecha Inicio" />
+                    <DatePicker value="{path: 'viewModel>/FechaInicio',formatter: '.formatter.formatDate'}" displayFormat="dd-MM-yyyy" 	enabled="false"/>
+
+                    <Label text="Fecha Fin" />
+                    <DatePicker value="{path: 'viewModel>/FechaFin',formatter: '.formatter.formatDate'}" displayFormat="dd-MM-yyyy" 	enabled="false"/>
+
+                    <Label text="Hora Inicio " />
+                    <TimePicker value="{viewModel>/HoraInicio}" />
+
+                    <Label text="Hora Fin" />
+                    <TimePicker value="{viewModel>/HoraFin}" />
 
 		</content>
 	</Panel>
   	<Panel expandable="true" headerText="OPERACIONES" width="auto" class="sapUiResponsiveMargin">
 		<content>
-    	 <Table
-          id="idOperacionesTable"
-          inset="false"
-          width="100%"
-          	items="{
-			        path: '/Operaciones'
-		        }" 
-          mode="None">
-          
-             <columns>
-                    <Column>
-                        <Text text="Op."/>
-                    </Column>
-                    <Column>
-                        <Text text="SOp"/>
-                    </Column>
-                    <Column>
-                        <Text text="PstoTbjo"/>
-                    </Column>
-                    <Column>
-                        <Text text="Txt.brv.operación"/>
-                    </Column>
-                    <Column>
-                        <Text text="Trabajo"/>
-                    </Column>
-                    <!-- Columna: Notificar -->
-                    <Column>
-                      <Text text="Notificar" />
-                    </Column>
-                </columns>
-                <items>
-                    <ColumnListItem>
-                        <cells>
-                            <Text text="{Operacion}"/>
-                            <Text text="{SubOperacion}"/>
-                            <Text text="{PuestoTrabajo}"/>
-                            <Text text="{DescripcionOperacion}"/>
-                            <Text text="{Trabajo}"/>
-                            <CheckBox selected="{Notificar}" />
-           
-                        </cells>
-                    </ColumnListItem>
-                </items>
-            </Table>
+    	  <Table id="idOperacionesTable" width="100%" items="{viewModel>/operations}" mode="None">
+                        <columns>
+                            <Column><Text text="Op."/></Column>
+                            <Column><Text text="SOp"/></Column>
+                            <Column><Text text="PstoTbjo"/></Column>
+                            <Column><Text text="Txt.brv.operación"/></Column>
+                            <Column><Text text="Trabajo"/></Column>
+                            <Column><Text text="Notificar"/></Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Text text="{viewModel>Operacion}"/>
+                                    <Text text="{viewModel>Necesidad}"/>
+                                    <Text text="{viewModel>Puestotrabajo}"/>
+                                    <Text text="{viewModel>Operaciontxt}"/>
+                                    <Text text="{viewModel>Trabajo}"/>
+                                    <CheckBox selected="{path: 'viewModel>Notification',  formatter: '.formatter.convertToBoolean'}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
             <!-- HH Reales {HHReales} -->
               <Label text="HH Reales" />
-              <Input	type="Number" value="" placeholder="Ingrese Horas" />
+                    <Input type="Number" value="{viewModel>/generalData/HHReales}" placeholder="Ingrese Horas" />
+
          
                 <!-- Selección de Motivo -->
             <Label text="Motivo Desviación:"/>
-           <Select id="idMotivo" width="100%" selectedKey="{/Motivos/SelectedMotivo}" items="{/Motivos/Lista}">
-                    <core:Item key="{key}" text="{text}" />
-                </Select>
+                    <Select id="idMotivo" width="100%" selectedKey="{viewModel>/Motivos/SelectedMotivo}" items="{viewModel>/Motivos/Lista}">
+                        <core:Item key="{viewModel>key}" text="{viewModel>text}" />
+                    </Select>
              
            
     		</content>
 	</Panel>
 	<Panel expandable="true" headerText="CHECKLIST" width="auto" class="sapUiResponsiveMargin">
 		<content>
-				 <Table
-          id="checklistTable"
-          inset="false"
-          width="100%"
-          	items="{
-			        path: '/CheckList'
-		        }" 
-          mode="None">
-          
-          <columns>
-            <!-- Columna: Actividad -->
-            <Column hAlign="Begin">
-              <Text text="ACTIVIDAD" />
-            </Column>
-            <!-- Columna: Tarea -->
-            <Column hAlign="Begin">
-              <Text text="TAREA" />
-            </Column>
-            <!-- Columna: Estado -->
-            <Column hAlign="Center">
-              <Text text="ESTADO" />
-            </Column>
-            <!-- Columna: Observaciones -->
-            <Column hAlign="Begin">
-              <Text text="OBSERVACIONES" />
-            </Column>
-            <!-- Columna: Notificar -->
-            <Column>
-              <Text text="Notificar" />
-            </Column>
-          </columns>
-          <items>
-            <ColumnListItem>
-              <!-- Actividad -->
-              <cells>
-                <Text text="{Actividad}" />
-                <!-- Tarea -->
-                 <Text text="{Tarea}" />
-                <!-- Estado -->
-                <Select
-                  forceSelection="true"
-                  width="100%"
-                  items="{
-                    path: '/Estado'
-                  }">
-                  <core:Item key="{Select}" text="{Select}" />
-                </Select>
-                <!-- Observaciones -->
-                <Input placeholder="Añadir comentario" />
+				 <Table id="checklistTable" width="100%" items="{viewModel>/checkList}" mode="None">
+                        <columns>
+                            <Column><Text text="ACTIVIDAD"/></Column>
+                            <Column><Text text="TAREA"/></Column>
+                            <Column><Text text="ESTADO"/></Column>
+                            <Column><Text text="OBSERVACIONES"/></Column>
+                            <Column><Text text="Notificar"/></Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Text text="{viewModel>Activitycode}" />
+                                    <Text text="{viewModel>Taskcodetxt}" />
+                                    <Select width="100%" selectedKey="{viewModel>Statustxt}">
+                                        <core:Item key="No Aprueba" text="No Aprueba" />
+                                        <core:Item key="No Aplica" text="No Aplica" />
+                                        <core:Item key="Aprueba" text="Aprueba" />
+                                    </Select>
+                                    <Input placeholder="Añadir comentario" value="{viewModel>Text}" />
+                                    <CheckBox selected="{path: 'viewModel>Tickbox', formatter: '.formatter.convertToBoolean'}" />
 
-                <!-- Notificar -->
-                 <CheckBox selected="{Notificar}" />
-              </cells>
-            </ColumnListItem>
-            <!-- Segunda fila 
-            <ColumnListItem>
-              <cells>
-                <Text text="Calificación Diseño" />
-                <Text text="Resistencia a golpes y vibraciones hasta 4G" />
-                 <Select width="100%" selectedKey="{Estado}">
-                    <core:Item key="Estado1" text="No Aprueba" />
-                    <core:Item key="Estado2" text="No Aplica" />
-                    <core:Item key="Estado3" text="Aprueba" />
-                  </Select>
-                <Input placeholder="Añadir comentario" />
-              </cells>
-            </ColumnListItem>
-            -->
-          </items>
-        </Table>
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
 		</content>
 	</Panel>
 	<Panel expandable="true" headerText="DATOS NUMERICOS" width="auto" class="sapUiResponsiveMargin">
 		<content>
-			 <Table
-          id="datosNumericosTable"
-          inset="false"
-          width="100%"
-          	items="{
-			        path: '/DatosNumericos'
-		        }" 
-          mode="None">
-          <headerToolbar>
-            <Toolbar>
-              <!-- <Title text="Datos Numéricos Actividades" />-->
-            </Toolbar>
-          </headerToolbar>
-          <columns>
-            <!-- Columna Actividad -->
-            <Column>
-              <Text text="ACTIVIDAD" />
-            </Column>
-            <!-- Columna Tarea -->
-            <Column>
-              <Text text="PARAMETRO DE MEDICION" />
-            </Column>
-            <!-- Columna Bornes -->
-            <Column>
-              <Text text="UNIDAD DE MEDIDA" />
-            </Column>
-            <!-- Columna Medición -->
-            <Column>
-              <Text text="MEDICIÓN" />
-            </Column>
-            <!-- Columna Medición Anterior -->
-            <Column>
-              <Text text="MEDICIÓN ANTERIOR" />
-            </Column>
-               <!-- Columna: Notificar -->
-            <Column>
-              <Text text="Notificar" />
-            </Column>
-          </columns>
-          <items>
-            <ColumnListItem>
-              <cells>
-                <!-- Actividad -->
-                <Text text="{Actividad}" />
-                <!-- Tarea ahora parametro de medicion-->
-                <Text text="{Tarea}" />
-                <!-- Bornes ahora unidad de medida-->
-                <!-- UnidadMedida -->
-                <Select
-                  forceSelection="true"
-                  width="100%"
-                  items="{
-                    path: '/UnidadMedida'
-                  }">
-                  <core:Item key="{Select}" text="{Select}" />
-                </Select>
-                <!-- Medición -->
-                <Input text="{Medicion}" />
-                <!-- Medición Anterior -->
-                <Text text="{MedicionAnterior}" />
-                 <!-- Notificar -->
-                 <CheckBox selected="{Notificar}" />
-              </cells>
-            </ColumnListItem>
-          </items>
-        </Table>
+			  <Table id="datosNumericosTable" width="100%" items="{viewModel>/numericData}" mode="None">
+                        <columns>
+                            <Column><Text text="ACTIVIDAD"/></Column>
+                            <Column><Text text="PARÁMETRO DE MEDICIÓN"/></Column>
+                            <Column><Text text="UNIDAD DE MEDIDA"/></Column>
+                            <Column><Text text="MEDICIÓN"/></Column>
+                            <Column><Text text="MEDICIÓN ANTERIOR"/></Column>
+                            <Column><Text text="Notificar"/></Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Text text="{viewModel>Activitycode}" />
+                                    <Text text="{viewModel>Tasktext}" />
+                                    <Text text="{viewModel>Unit}" />
+                                    <Input text="{viewModel>Measurement}" />
+                                    <Text text="{viewModel>Lastmeasurement}" />
+                                    <CheckBox selected="{path: 'viewModel>Notification',  formatter: '.formatter.convertToBoolean'}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
 		</content>
 	</Panel>
-  	<Panel expandable="true" headerText="MEDICIONES" width="auto" class="sapUiResponsiveMargin">
-		<content>
-      <!-- Nueva Tabla de Mediciones -->
-            <Table id="idMedicionesTable" items="{/Mediciones}">
-                <headerToolbar>
-                    <Toolbar>
-                        <!--  <Title text="Mediciones" />-->
-                    </Toolbar>
-                </headerToolbar>
-                <columns>
-                    <Column><Text text="Punto de Medida" /></Column>
-                    <Column><Text text="Descripción" /></Column>
-                    <Column><Text text="Valor Medido" /></Column>
-                </columns>
-                <items>
-                    <ColumnListItem>
-                        <cells>
-                            <Text text="{PuntoMedida}" />
-                            <Text text="{Descripcion}" />
-                            <Input value="{ValorMedido}" placeholder="Ingrese el valor" />
-                        </cells>
-                    </ColumnListItem>
-                </items>
-            </Table>
-    		</content>
-	</Panel>
+  <Panel expandable="true" headerText="MEDICIONES" width="auto" class="sapUiResponsiveMargin">
+    <content>
+        <Table id="idMedicionesTable" items="{viewModel>/measurements}">
+            <headerToolbar>
+                <Toolbar>
+                    <!-- <Title text="Mediciones" /> -->
+                </Toolbar>
+            </headerToolbar>
+            <columns>
+                <Column><Text text="Punto de Medida" /></Column>
+                <Column><Text text="Descripción" /></Column>
+                <Column><Text text="Valor Medido" /></Column>
+              <!--  <Column><Text text="Notificar" /></Column> -->
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{viewModel>Ptomedida}" />
+                        <Text text="{viewModel>Ptomedidatxt}" />
+                        <Input value="{viewModel>Valormedida}" placeholder="Ingrese el valor" />
+                      <!--  <CheckBox selected="{path: 'viewModel>Notificar', formatter: '.formatter.convertToBoolean'}" /> -->
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </content>
+</Panel>
+
 	<Panel expandable="true" headerText="RECEPCION DE TRABAJOS" width="auto" class="sapUiResponsiveMargin">
-		<content>
-    	<l:VerticalLayout class="sapUiContentPadding" width="100%">
+		<content  >
+    	<l:VerticalLayout class="sapUiContentPadding" width="100%" visible="{path: 'viewModel>/workReceipt', formatter: '.formatter.isTableVisible'}">
 			 <!-- Sección Técnico -->
-    
-            <!-- Nombre Técnico {NombreTecnico1}-->
-            <Label text="NOMBRE TÉCNICO 1:" />
-            <Input value="" placeholder="Ingrese el nombre del técnico 1" />
-             <!-- Nombre Técnico 2 {NombreTecnico2}-->
+         <Label text="NOMBRE TÉCNICO 1:" />
+            <Input value="{viewModel>/workReceipt/NombreTecnico1}" placeholder="Ingrese el nombre del técnico 1" />
+
             <Label text="NOMBRE TÉCNICO 2:" />
-            <Input value="" placeholder="Ingrese el nombre del técnico 2" />
-            <!-- Empresa Contratista {EmpresaContratista}-->
+            <Input value="{viewModel>/workReceipt/NombreTecnico2}" placeholder="Ingrese el nombre del técnico 2" />
+
             <Label text="EMPRESA CONTRATISTA:" />
-            <Input value="" placeholder="Ingrese la empresa contratista" />
-            <!-- Nombre ITO {NombreITO}-->
+            <Input value="{viewModel>/workReceipt/EmpresaContratista}" placeholder="Ingrese la empresa contratista" />
+
             <Label text="NOMBRE ITO:" />
-            <Input value="" placeholder="Ingrese el nombre del ITO" />
-            <!-- Nombre Supervisor 
+            <Input value="{viewModel>/workReceipt/NombreITO}" placeholder="Ingrese el nombre del ITO" />
+
             <Label text="NOMBRE SUPERVISOR:" />
-            <Select width="100%" selectedKey="{NombreSupervisor}">
-              <core:Item key="Supervisor1" text="Supervisor 1" />
-              <core:Item key="Supervisor2" text="Supervisor 2" />
-              <core:Item key="Supervisor3" text="Supervisor 3" />
-            </Select>
-            -->
-             <!-- Nombre Supervisor {NombreSupervisor} -->
-            <Label text="NOMBRE SUPERVISOR:" />
-            <Input value="" placeholder="Ingrese el nombre del Supervisor" />
-           
-            <!-- Nombre Operador {NombreOperador} -->
+            <Input value="{viewModel>/workReceipt/NombreSupervisor}" placeholder="Ingrese el nombre del Supervisor" />
+
             <Label text="NOMBRE OPERADOR:" />
-            <Input value="" placeholder="Ingrese el nombre del operador" />
-            </l:VerticalLayout>
+            <Input value="{viewModel>/workReceipt/NombreOperador}" placeholder="Ingrese el nombre del operador" />
+          
+      </l:VerticalLayout>
 		</content>
 	</Panel>
     </content>	
 
 		<footer>
 			<Toolbar>
-				<ToolbarSpacer/>
-				<Button text="Adjuntos" press="onPress" />
-				<Button type="Reject"
-						text="Cancelar"
-						press="onPressCancel"
-						ariaDescribedBy="rejectButtonDescription genericButtonDescription">
-					<layoutData>
-						<FlexItemData growFactor="1" />
-					</layoutData>
-				</Button>
-					<Button type="Accept"
-						text="Guardar"
-						press="onPressSave"
-						ariaDescribedBy="acceptButtonDescription genericButtonDescription">
-					<layoutData>
-						<FlexItemData growFactor="1" />
-					</layoutData>
-				</Button>
-			</Toolbar>
+                <ToolbarSpacer/>
+                <Button text="Adjuntos" press="onAttachFile" />
+                <Button text="Tomar Foto" press="onFragmentPhoto" icon="sap-icon://camera" type="Emphasized" />
+                <Button type="Reject"
+                        text="Cancelar"
+                        press="onPressCancel"
+                        ariaDescribedBy="rejectButtonDescription genericButtonDescription">
+                    <layoutData>
+                        <FlexItemData growFactor="1" />
+                    </layoutData>
+                </Button>
+                <Button type="Accept"
+                        text="Guardar"
+                        press="onPressSave"
+                        ariaDescribedBy="acceptButtonDescription genericButtonDescription">
+                    <layoutData>
+                        <FlexItemData growFactor="1" />
+                    </layoutData>
+                </Button>
+            </Toolbar>
+
 		</footer>
 	</Page>
 </mvc:View>

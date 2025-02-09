@@ -18,7 +18,7 @@ server:
         backend:
           - url: http://vhgnlds4ci.sap.gnlquintero.com:44300
             path: /sap
-            destination: gnlqhttpsdev100
+            destination: gnlqhttpsdev200
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:

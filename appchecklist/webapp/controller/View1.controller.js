@@ -1,513 +1,434 @@
 sap.ui.define([
   "sap/ui/core/mvc/Controller",
-  "sap/ui/model/json/JSONModel"
-], (Controller, JSONModel) => {
+  "sap/ui/model/json/JSONModel",
+  "sap/ui/model/odata/v2/ODataModel",
+  "sap/m/MessageToast",
+  "appchecklist/appchecklist/util/formatter",
+  "sap/ui/core/Fragment",
+  "sap/m/plugins/UploadSetwithTable"
+], function (Controller, JSONModel, ODataModel, MessageToast, formatter, Fragment, UploadSetwithTable) {
   "use strict";
 
   return Controller.extend("appchecklist.appchecklist.controller.View1", {
-    onInit() {
-      const oData = {
-        tipoCheckList: {
-          id: "gas"
-        },
+    formatter: formatter,
+    onInit: function () {
+      var oComponentData = this.getOwnerComponent().getComponentData();
+      var oStartupParams = (oComponentData && oComponentData.startupParameters) ? oComponentData.startupParameters : {};
+      var sOrderId = null;
 
-        DatosGenerales: {
+      // Obtener OrderId o establecer ID de prueba
+      if (oStartupParams.OrderId && oStartupParams.OrderId.length > 0) {
+        sOrderId = oStartupParams.OrderId[0];
+        console.log(" Orden recibida en Aplicación A:", sOrderId);
+      } else {
+        console.warn(" No se recibió ningún OrderId en la navegación. Usando ID de prueba.");
+        sOrderId = "400027717";
+      }
 
-        },
-        Operaciones: [
-          {
-            Operacion: "0001",
-            SubOperacion: "INT-OPE",
-            PuestoTrabajo: "INT-OPE",
-            DescripcionOperacion: "Permiso",
-            Trabajo: "0.0"
-          },
-          {
-            Operacion: "0020",
-            SubOperacion: "INT-CTR",
-            PuestoTrabajo: "INT-CTR",
-            DescripcionOperacion: "ITO",
-            Trabajo: "1"
-          },
-          {
-            Operacion: "0030",
-            SubOperacion: "CON-F&G",
-            PuestoTrabajo: "CON-F&G",
-            DescripcionOperacion: "Contratista",
-            Trabajo: "4"
-          }
-        ],
-        CheckList: [
-          {
-            Actividad: "Calificación instalacion",
-            Tarea: "Correcta ubicación y orientación del equipo",
-            Estado: "",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación instalacion",
-            Tarea: "El equipo tiene libre acceso y no se encuentra obstruido",
-            Estado: "",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación instalacion",
-            Tarea: "Correcto estado sellos de seguridad y cumplimiento áreas clasificadas",
-            Estado: "",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación instalacion",
-            Tarea: "Equipo esta correctamente identificado en campo (TAG)",
-            Estado: "",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación instalacion",
-            Tarea: "Soportación y fijaciones en buen estado",
-            Estado: "",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación instalacion",
-            Tarea: "Correcta instalación de puesta a tierra del equipo (Gland, Equipo, Estructura)",
-            Estado: "",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Operación",
-            Tarea: "Inspección visual y limpieza del equipo",
-            Estado: "",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Operación",
-            Tarea: "Realizar limpieza de sensor",
-            Estado: "",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Operación",
-            Tarea: "Realizar limpieza y reaprete de borneras",
-            Estado: "",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Operación",
-            Tarea: "Engrase de tornillería exterior (Conexiones a tierra, pernos de fijación, etc)",
-            Estado: "",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Operación",
-            Tarea: "Comprobación tensión de alimentación del equipo",
-            Estado: "",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Operación",
-            Tarea: "Verificación de pre alarma",
-            Estado: "",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Operación",
-            Tarea: "Verificación de alarma",
-            Estado: "",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Operación",
-            Tarea: "Verificación de alarma de falla",
-            Estado: "",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación instalacion",
-            Tarea: "Inspección y reposición de amarras de cables",
-            Estado: "",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Desempeño",
-            Tarea: "Pruebas funcionales",
-            Estado: "",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Desempeño",
-            Tarea: "Calibración de equipo",
-            Estado: "",
-            Observaciones: "", Notificar: false
-          }
-        ],
-        DatosNumericos: [
-          {
-            Actividad: "Mediciones eléctricas del motor",
-            Tarea: "Medición resistencia entre bobinas",
-            Bornes: "U - V",
-            Medicion: "10 Ω",
-            MedicionAnterior: "12 Ω",
-            Notificar: false
-          },
-          {
-            Actividad: "Mediciones eléctricas del motor",
-            Tarea: "Medición resistencia entre bobinas",
-            Bornes: "U - W",
-            Medicion: "11 Ω",
-            MedicionAnterior: "11 Ω",
-            Notificar: false
-          },
-          {
-            Actividad: "Mediciones eléctricas del motor",
-            Tarea: "Medición resistencia entre bobinas",
-            Bornes: "V - W",
-            Medicion: "9 Ω",
-            MedicionAnterior: "8 Ω",
-            Notificar: false
-          },
-          {
-            Actividad: "Mediciones eléctricas del motor",
-            Tarea: "Medición resistencia entre bobinas",
-            Bornes: "U - TIERRA",
-            Medicion: "0 Ω",
-            MedicionAnterior: "0 Ω",
-            Notificar: false
-          },
-          {
-            Actividad: "Mediciones eléctricas del motor",
-            Tarea: "Medición resistencia entre bobinas",
-            Bornes: "V - TIERRA",
-            Medicion: "0 Ω",
-            MedicionAnterior: "6 Ω",
-            Notificar: false
-          },
-          {
-            Actividad: "Mediciones eléctricas del motor",
-            Tarea: "Medición resistencia entre bobinas",
-            Bornes: "W - TIERRA",
-            Medicion: "0 Ω",
-            MedicionAnterior: "0 Ω",
-            Notificar: false
-          },
-          {
-            Actividad: "Mediciones eléctricas en alimentadores",
-            Tarea: "Medición resistencia entre bobinas",
-            Bornes: "L1-L2",
-            Medicion: "0 Ω",
-            MedicionAnterior: "10 Ω",
-            Notificar: false
-          },
-          {
-            Actividad: "Mediciones eléctricas en alimentadores",
-            Tarea: "Medición resistencia entre bobinas",
-            Bornes: "L1-L3",
-            Medicion: "0 Ω",
-            MedicionAnterior: "10 Ω",
-            Notificar: false
-          },
-          {
-            Actividad: "Mediciones eléctricas en alimentadores",
-            Tarea: "Medición resistencia entre bobinas",
-            Bornes: "L2-L3",
-            Medicion: "0 Ω",
-            MedicionAnterior: "50 Ω",
-            Notificar: false
-          },
-          {
-            Actividad: "Mediciones eléctricas en alimentadores",
-            Tarea: "Medición resistencia entre bobinas",
-            Bornes: "L1-TIERRA",
-            Medicion: "0 Ω",
-            MedicionAnterior: "10 Ω",
-            Notificar: false
-          },
-          {
-            Actividad: "Mediciones eléctricas en alimentadores",
-            Tarea: "Medición resistencia entre bobinas",
-            Bornes: "L2-TIERRA",
-            Medicion: "0 Ω",
-            MedicionAnterior: "10 Ω",
-            Notificar: false
-          },
-          {
-            Actividad: "Mediciones eléctricas en alimentadores",
-            Tarea: "Medición resistencia entre bobinas",
-            Bornes: "L3-TIERRA",
-            Medicion: "0 Ω",
-            MedicionAnterior: "10 Ω",
-            Notificar: false
-          },
-          {
-            Actividad: "Mediciones puesta a tierra",
-            Tarea: "Valor maximo 5 Ω",
-            Bornes: "TIERRA",
-            Medicion: "0 Ω",
-            MedicionAnterior: "4 Ω",
-            Notificar: false
-          },
-          {
-            Actividad: "Mediciones puesta a tierra",
-            Tarea: "Valor maximo 5 Ω",
-            Bornes: "TIERRA",
-            Medicion: "0 Ω",
-            MedicionAnterior: "4 Ω",
-            Notificar: false
-          },
-          {
-            Actividad: "Mediciones equipo",
-            Tarea: "Valores de Corriente Campo a 4 mA",
-            Bornes: "mA",
-            Medicion: "0",
-            MedicionAnterior: "0",
-            Notificar: false
-          },
-          {
-            Actividad: "Mediciones equipo",
-            Tarea: "Valores de Corriente Campo a 8 mA",
-            Bornes: "mA",
-            Medicion: "0",
-            MedicionAnterior: "0",
-            Notificar: false
-          }
-        ]
-        ,
-        CheckList2: [
-          {
-            Actividad: "Calificación Diseño",
-            Tarea: "Vida útil del instrumento/obsolescencia",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Diseño",
-            Tarea: "Resistencia a golpes y vibraciones hasta 4G",
-            Estado: "No Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Diseño",
-            Tarea: "Equipo cumple con clasificación UL seguridad intrínseca",
-            Estado: "No Aplica",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Diseño",
-            Tarea: "Equipo cumple para trabajo en atmósfera explosiva ATEX",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Instalación",
-            Tarea: "Correcta ubicación y orientación del equipo",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Instalación",
-            Tarea: "Montaje del instrumento con espacio libre para evitar darios mecanicos",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Instalación",
-            Tarea: "Acceso y visibili dad del instrumento",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Instalación",
-            Tarea: "Revision de sujeción de conectores gland",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Instalación",
-            Tarea: "Instrumento y caja de conexiones se encuentra hermeticamente sellado",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Instalación",
-            Tarea: "Inspección y reposición de amarras cables",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Instalación",
-            Tarea: "Deterioro fisico del equipo (sulfatación, corrosión)",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Instalación",
-            Tarea: "Estado de conexiones a tierra (limpieza, cortadas, no instaladas)",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Instalación",
-            Tarea: "Revisión de elementos mecánicos de sujeción tornillos, pernos (instalados)",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Instalación",
-            Tarea: "Instrumento esta correctamente identificado en campo 'tag' (rotulado)",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Operación",
-            Tarea: "Limpieza e inspeccion visual del equipo",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Operación",
-            Tarea: "Reconexion de todos los terminales y verificacion de apriete de los mismos",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Operación",
-            Tarea: "Comprobacion tension de alimentacion del equipo 24 vdc",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Operación",
-            Tarea: "Revisar el filtro de la linea base y en caso de que no lo tenga, reponer.(manual del fabricante) ",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Operación",
-            Tarea: "Revisar parametros de configuracion del equipo (unidad de ingenieria etcetera) ",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Operación",
-            Tarea: "Revisar deterioro fisico interno en caja de conexiones del detector (sulfatacion, corrosion, componentes)",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Operación",
-            Tarea: "Engrase de tornilleria exterior y sellado ",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Desempeño",
-            Tarea: "Comprobar indicador LED (verde) del detector en estado pasivo ",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Desempeño",
-            Tarea: "Ajuste del punto Zero atmosferico",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Desempeño",
-            Tarea: "Ajuste del SPAN con gas patron certificado por el fabricante (Sensibilidad) ",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Desempeño",
-            Tarea: "Comprobar estado de luces LED del detector durante los ajustes de sensibilidad y zero atmosferico ",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Desempeño",
-            Tarea: "Detector funciona consistentemente y entrega reproducibilidad en sistema de control ",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Desempeño",
-            Tarea: "Corroborar normalizacion del estado de alarma en sistema de control ",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          },
-          {
-            Actividad: "Calificación Desempeño",
-            Tarea: "Requiere calibracion",
-            Estado: "Aprueba",
-            Observaciones: "", Notificar: false
-          }
-        ],
-        Mediciones: [
-          {
-            PuntoMedida: "602",
-            Descripcion: "Tolerancia GGH-03005",
-            ValorMedido: ""
+      // Obtener otros parámetros y almacenarlos en variables
+      var isChecklist = oStartupParams.IsChecklist ? oStartupParams.IsChecklist[0] === "true" : false;
+      var isNumericlist = oStartupParams.IsNumericlist ? oStartupParams.IsNumericlist[0] === "true" : false;
+      var textChecklist = oStartupParams.TextChecklist ? oStartupParams.TextChecklist[0] : "Sin especificar";
 
-          }
-        ],
+      console.log(" Parámetros de inicio recibidos:", {
+        OrderId: sOrderId,
+        IsChecklist: isChecklist,
+        IsNumericlist: isNumericlist,
+        TextChecklist: textChecklist
+      });
 
-        Estado: [
+      // Inicializar el modelo OData
+      var oModel = this.getOwnerComponent().getModel();
+      this.getView().setModel(oModel);
 
-          {
-            Select: "Selecione"
-          },
-          {
-            Select: "Aprueba"
-          },
-          {
-            Select: "No Aprueba"
-          },
-          {
-            Select: "No Aplica"
-          }
-
-        ],
-        UnidadMedida: [
-          {
-            Select: "Selecione"
-          },
-          {
-            Select: "U - V"
-          },
-          {
-            Select: "U - W"
-          },
-          {
-            Select: "V - W"
-          },
-          {
-            Select: "U - Tierra"
-          },
-          {
-            Select: "V - Tierra"
-          }
-
-        ],
+      // Inicializar modelo JSON con los valores recibidos
+      var oData = {
+        OrderId: sOrderId,
+        IsChecklist: isChecklist,
+        IsNumericlist: isNumericlist,
+        TextChecklist: textChecklist,
+        FechaInicio: "",
+        FechaFin: "",
+        UbicacionTecnica: "",
+        Equipo: "",
+        OT: "",
+        HoraInicio: "",
+        HoraFin: "",
+        generalData: [],
+        measurements: [],
+        operations: [],
+        checkList: [],
+        numericData: [],
+        workReceipt: [],
+        uploadedFiles: [],
         Motivos: {
-          SelectedMotivo: "0000", // Motivo seleccionado por defecto
-          Lista: [ // Lista de motivos
-            { key: "0000", text: "0000 - Seleccione motivo" },
-            { key: "0001", text: "0001 - Sin Desviación" },
-            { key: "0002", text: "0002 - Sin ventana operacional" },
-            { key: "0003", text: "0003 - Factor climático" },
-            { key: "0004", text: "0004 - Falta disponibilidad de Person" },
-            { key: "0005", text: "0005 - Falta Herramienta o equipo" },
-            { key: "0006", text: "0006 - Sin Stock de materiales" },
-            { key: "0007", text: "0007 - Retrabajo" },
-            { key: "0008", text: "0008 - Subestimación de HH" }
-          ]
+          SelectedMotivo: "",
+          Lista: []
         }
       };
 
-      // Crear modelo JSON único
-      const oModel = new JSONModel(oData);
-      // Asignar el modelo combinado a la vista
-      this.getView().setModel(oModel);
+      var oJsonModel = new JSONModel(oData);
+      this.getView().setModel(oJsonModel, "viewModel");
+
+      // Cargar datos solo si hay un OrderId válido
+      if (sOrderId) {
+        this._loadData(sOrderId);
+      } else {
+        sap.m.MessageToast.show(" No se recibió un ID de orden válido.");
+      }
+    },
+
+    /**
+     * Realiza una solicitud POST para obtener los datos filtrados
+     */
+    _loadData: function (sOrderId) {
+      var oModel = this.getView().getModel();
+      var oJsonModel = this.getView().getModel("viewModel");
+      var that = this;
+
+      if (!oModel) {
+        console.error("Error: El modelo OData no está disponible.");
+        sap.m.MessageBox.error("El servicio OData no está disponible.");
+        return;
+      }
+
+      // **Construcción del payload para la llamada POST**
+      var oPayload = {
+        Property: "CHECKLIST",
+        Sign: "I",
+        Option: "EQ",
+        Low: sOrderId,
+        generalData: [],
+        measurements: [],
+        operations: [],
+        checkList: [],
+        numericData: [],
+        workReceipt: []
+      };
+
+      // **Mostrar indicador de carga**
+      sap.ui.core.BusyIndicator.show(0);
+
+      // **Llamada POST al servicio OData**
+      oModel.create("/filtersSet", oPayload, {
+        success: function (oData) {
+          console.log("Datos obtenidos desde OData:", oData);
+
+          // **Actualizar el modelo con los datos obtenidos**
+          oJsonModel.setProperty("/generalData", oData.generalData.results || []);
+          oJsonModel.setProperty("/measurements", oData.measurements.results || []);
+          oJsonModel.setProperty("/operations", oData.operations.results || []);
+          oJsonModel.setProperty("/checkList", oData.checkList.results || []);
+          oJsonModel.setProperty("/numericData", oData.numericData.results || []);
+          oJsonModel.setProperty("/workReceipt", oData.workReceipt.results || []);
+
+          // **Asignar datos generales**
+          if (oData.generalData && oData.generalData.results.length > 0) {
+            var oGeneral = oData.generalData.results[0];
+            oJsonModel.setProperty("/UbicacionTecnica", oGeneral.Ubicacion || "");
+            oJsonModel.setProperty("/Equipo", oGeneral.Equipo || "");
+            oJsonModel.setProperty("/OT", oGeneral.Aufnr || "");
+            oJsonModel.setProperty("/FechaInicio", oGeneral.Fechainicio || "");
+            oJsonModel.setProperty("/FechaFin", oGeneral.Fechafin || "");
+            oJsonModel.setProperty("/HoraInicio", oGeneral.Horainicio || "");
+            oJsonModel.setProperty("/HoraFin", oGeneral.Horafin || "");
+          }
+          oJsonModel.refresh(true);
+
+          // **Ocultar indicador de carga**
+          sap.ui.core.BusyIndicator.hide();
+        },
+        error: function (oError) {
+          console.error("Error en la llamada POST a /filtersSet", oError);
+          sap.m.MessageBox.error("Error al cargar los datos de la orden.");
+          sap.ui.core.BusyIndicator.hide();
+        }
+      });
+    },
+
+    /**
+     * Cancelar acción
+     */
+    onPressCancel: function () {
+      MessageToast.show("Operación cancelada");
+    },
+    /**
+  * Guardar acción
+  */
+    onPressSave: function () {
+
+    },
+    /**
+      * onAttachFile acción #############onAttachFile####################################
+      */
+    onAttachFile: function () {
+      var oView = this.getView();
+
+      // Cargar el fragmento solo si no existe
+      if (!this._oFileUploaderDialog) {
+        Fragment.load({
+          id: oView.getId(),
+          name: "appchecklist.appchecklist.view.fragments.FileUploader",
+          controller: this
+        }).then(function (oDialog) {
+          oView.addDependent(oDialog);
+          this._oFileUploaderDialog = oDialog;
+          this._oFileUploaderDialog.open();
+        }.bind(this));
+      } else {
+        this._oFileUploaderDialog.open();
+      }
+    },
+
+    onCloseFileUploaderDialog: function () {
+      if (this._oFileUploaderDialog) {
+        this._oFileUploaderDialog.close();
+      }
+    },
+    /**
+        * onFileSelected acción ##########onFileSelected#########################################
+        */
+
+
+    onFileSelected: function (oEvent) {
+      var aFiles = oEvent.getParameter("files");
+      var oViewModel = this.getView().getModel("viewModel");
+
+      if (!aFiles || aFiles.length === 0) {
+        MessageToast.show(" No se seleccionó ningún archivo.");
+        return;
+      }
+
+      var aAttachments = oViewModel.getProperty("/attachments") || [];
+
+      aFiles.forEach(function (oFile) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          var sFileContent = e.target.result.split(",")[1];
+
+          var oAttachment = {
+            fileName: oFile.name,
+            fileSize: oFile.size,
+            fileType: oFile.type,
+            fileContent: sFileContent
+          };
+
+          aAttachments.push(oAttachment);
+          oViewModel.setProperty("/attachments", aAttachments);
+        };
+
+        reader.readAsDataURL(oFile);
+      });
+
+      // Cerrar el diálogo después de la selección de archivos
+      this.onCloseFileUploaderDialog();
+    },
+    /**
+         * onPreviewFile acción ##########onPreviewFile#######################
+         */
+
+
+    onPreviewFile: function (oEvent) {
+      var oItem = oEvent.getSource();
+      var sFileContent = oItem.getCustomData()[0].getValue();
+      var sFileType = oItem.getCustomData()[1].getValue();
+
+      if (sFileContent) {
+        var sDataUri = `data:${sFileType};base64,${sFileContent}`;
+        window.open(sDataUri, "_blank");
+      } else {
+        MessageToast.show(" No se puede previsualizar el archivo.");
+      }
+    },
+
+
+    /**
+         * onSaveFiles acción ##########onSaveFiles#######################
+         */
+    onSaveFiles: function () {
+      var oModel = this.getView().getModel();
+      var oViewModel = this.getView().getModel("viewModel");
+      var sOrderId = oViewModel.getProperty("/OrderId");
+      var aAttachments = oViewModel.getProperty("/attachments") || [];
+
+      if (!sOrderId) {
+        MessageBox.error(" No se ha definido un ID de orden.");
+        return;
+      }
+
+      if (aAttachments.length === 0) {
+        MessageBox.warning(" No hay archivos para guardar.");
+        return;
+      }
+
+      aAttachments.forEach(function (oAttachment) {
+        var sSlug = `ORDER;${sOrderId};${oAttachment.fileName}`;
+
+        oModel.create("/filesSet", {}, {
+          headers: {
+            "Slug": sSlug,
+            "Content-Type": oAttachment.fileType
+          },
+          data: oAttachment.fileContent,
+          success: function () {
+            MessageToast.show(`Archivo cargado: ${oAttachment.fileName}`);
+          },
+          error: function (oError) {
+            console.error(" Error al cargar el archivo:", oError);
+            MessageBox.error(`Error al cargar el archivo: ${oAttachment.fileName}`);
+          }
+        });
+      });
+
+      // Limpiar la lista después de guardar
+      oViewModel.setProperty("/attachments", []);
+    },
+
+    // ###############################
+    // #### FOTO
+    //####################################
+    onFragmentPhoto: function () {
+      var that = this;
+
+      // Verificar si el fragmento ya está cargado
+      if (!this._oPhotoDialog) {
+        Fragment.load({
+          id: this.getView().getId(),
+          name: "appchecklist.appchecklist.view.fragments.UploadPhotos", // Ruta correcta del fragmento
+          controller: this
+        }).then(function (oDialog) {
+          this.getView().addDependent(oDialog);
+          this._oPhotoDialog = oDialog;
+          this._oPhotoDialog.open();
+        }.bind(this)).catch(function (error) {
+          console.error("❌ Error al cargar el fragmento:", error);
+        });
+      } else {
+        this._oPhotoDialog.open();
+      }
+    },
+    onUploadAll: function (file) {
+      var oUploadSet = this.byId("uploadSetPhotos");
+  
+      if (!oUploadSet) {
+          console.error("❌ No se encontró el UploadSet. Verifica que el fragmento está cargado.");
+          return;
+      }
+  
+      // Si se recibe un archivo (cuando se toma una foto)
+      if (file) {
+          var oItem = new sap.m.UploadSetItem({
+              fileName: file.name,
+              mediaType: file.type,
+              file: file
+          });
+  
+          oUploadSet.addItem(oItem);
+          sap.m.MessageToast.show("✅ Foto agregada: " + file.name);
+      }
+  
+      // Obtener todos los archivos del UploadSet
+      var aItems = oUploadSet.getItems();
+      
+      if (aItems.length === 0) {
+          sap.m.MessageBox.warning("⚠️ No hay fotos para subir.");
+          return;
+      }
+  
+      // Simulación de subida de archivos (reemplázalo con la lógica real de OData)
+      aItems.forEach(function (oItem) {
+          console.log("📤 Subiendo archivo:", oItem.getFileName());
+  
+          // Simulación de subida exitosa
+          setTimeout(function () {
+              sap.m.MessageToast.show(`✅ Archivo subido: ${oItem.getFileName()}`);
+          }, 1000);
+      });
+  
+      // Cerrar el fragmento después de guardar
+      if (this._oPhotoFragment) {
+          this._oPhotoFragment.close();
+      }
+  },
+  
+    onBeforeUpload: function (oEvent) {
+      let oItem = oEvent.getParameter("item");
+      oEvent.getParameter("request").setUrl("/sap/opu/odata/sap/ZPM01_SRV/filesSet");
+    },
+    onUploadCompleted: function (oEvent) {
+      let status = oEvent.getParameter("status");
+      if (status === 200) {
+        sap.m.MessageBox.success("Foto subida correctamente");
+      } else {
+        sap.m.MessageBox.error("Error al subir la foto");
+      }
+    },
+
+
+    onCapturePhoto: function () {
+      var that = this;
+  
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function (stream) {
+                let video = document.createElement("video");
+                video.srcObject = stream;
+                video.play();
+    
+                let canvas = document.createElement("canvas");
+                video.addEventListener("canplay", function () {
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    canvas.getContext("2d").drawImage(video, 0, 0);
+    
+                    // Convertir la imagen a Base64
+                    let base64Image = canvas.toDataURL("image/png"); // Formato Base64
+    
+                    // Crear un archivo a partir de la imagen Base64
+                    fetch(base64Image)
+                        .then(res => res.blob()) // Convertir Base64 a Blob
+                        .then(blob => {
+                            let file = new File([blob], "foto_" + Date.now() + ".png", { type: "image/png" });
+    
+                            // Llamar a la función para agregar el archivo al UploadSet
+                            that._addFileToUploadSet(file);
+    
+                            // Detener la transmisión de la cámara
+                            stream.getTracks().forEach(track => track.stop());
+                        });
+                });
+            })
+            .catch(function (error) {
+                sap.m.MessageBox.error("Error al acceder a la cámara: " + error.message);
+            });
+    } else {
+        sap.m.MessageBox.error("La cámara no está disponible en este dispositivo.");
     }
+  },
+  _addFileToUploadSet: function (oEvent) {
+    let status = oEvent.getParameter("status");
+    if (status === 200) {
+      sap.m.MessageBox.success("Foto subida correctamente");
+    } else {
+      sap.m.MessageBox.error("Error al subir la foto");
+    }
+  },
+  onClosePhotoDialog: function () {
+    if (this._oPhotoDialog) {
+      this._oPhotoDialog.close();
+    }
+  },
+  
+
+
+
+   
+
+
+
+  
+
+
+
   });
 });

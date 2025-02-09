@@ -1,0 +1,19 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m">
+    <Dialog id="fileUploadDialog" title="Adjuntar Archivos/Fotos" type="Message">
+        <content>
+            <UploadCollection id="fileUploader"
+                maximumFilenameLength="55"
+                multiple="true"
+                instantUpload="false"
+                items="{viewModel>/attachments}">
+                <items>
+                    <UploadCollectionItem fileName="{viewModel>fileName}" mimeType="{viewModel>fileType}" />
+                </items>
+            </UploadCollection>
+        </content>
+         <buttons>
+            <Button text="Guardar Archivos" type="Accept" press="onSaveFiles" enabled="{= ${viewModel>/attachments}.length > 0 }" />
+            <Button text="Cerrar" press="onCloseFileUploaderDialog" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

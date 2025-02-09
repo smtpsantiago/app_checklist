@@ -1,0 +1,23 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:plugins="sap.m.plugins" xmlns:upload="sap.m.upload">
+    <Dialog id="photoUploadDialog" title="Adjuntar Fotos" type="Message">
+        <content>
+            <!-- Botón para abrir la cámara y capturar fotos -->
+            <Button text="Tomar Foto" press="onCapturePhoto" icon="sap-icon://camera" type="Emphasized"/>
+
+            <!-- UploadSet con tabla -->
+            <upload:UploadSet id="uploadSetPhotos"
+                instantUpload="false"
+                maxFileSize="10"
+                fileTypes="image/png,image/jpeg"
+                beforeUploadStarts="onBeforeUpload"
+                uploadCompleted="onUploadCompleted">
+                
+            </upload:UploadSet>
+
+        </content>
+        <buttons>
+            <Button text="Subir Todas" type="Accept" press="onUploadAll" enabled="{= ${viewModel>/photos}.length > 0 }" />
+            <Button text="Cerrar" press="onClosePhotoDialog" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>
